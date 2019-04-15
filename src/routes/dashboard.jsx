@@ -7,6 +7,7 @@ import BubbleChart from "@material-ui/icons/BubbleChart";
 import LocationOn from "@material-ui/icons/LocationOn";
 import Notifications from "@material-ui/icons/Notifications";
 import Unarchive from "@material-ui/icons/Unarchive";
+import Home from "@material-ui/icons/Home";
 // core components/views
 import DashboardPage from "views/Dashboard/Dashboard.jsx";
 import UserProfile from "views/UserProfile/UserProfile.jsx";
@@ -16,8 +17,16 @@ import Icons from "views/Icons/Icons.jsx";
 import Maps from "views/Maps/Maps.jsx";
 import NotificationsPage from "views/Notifications/Notifications.jsx";
 import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.jsx";
+import HomePage from "pages/HomePage.jsx";
 
 const dashboardRoutes = [
+  {
+    path: "/home",
+    sidebarName: "首页",
+    navbarName: "首页",
+    icon: Home,
+    component: HomePage
+  },
   {
     path: "/dashboard",
     sidebarName: "Dashboard",
