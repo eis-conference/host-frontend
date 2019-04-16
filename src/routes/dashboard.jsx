@@ -18,8 +18,9 @@ import Maps from "views/Maps/Maps.jsx";
 import NotificationsPage from "views/Notifications/Notifications.jsx";
 import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.jsx";
 import HomePage from "pages/HomePage.jsx";
+import MeetingPage from "pages/MeetingPage.jsx";
 
-const dashboardRoutes = [
+export const dashboardRoutes = [
   {
     path: "/home",
     sidebarName: "首页",
@@ -62,13 +63,7 @@ const dashboardRoutes = [
     icon: BubbleChart,
     component: Icons
   },
-  {
-    path: "/maps",
-    sidebarName: "Maps",
-    navbarName: "Map",
-    icon: LocationOn,
-    component: Maps
-  },
+
   {
     path: "/notifications",
     sidebarName: "Notifications",
@@ -86,4 +81,11 @@ const dashboardRoutes = [
   { redirect: true, path: "/", to: "/dashboard", navbarName: "Redirect" }
 ];
 
-export default dashboardRoutes;
+let routesNotInSideBar = [
+  {
+    path: "/meeting/:meetingId",
+    component: MeetingPage
+  },
+];
+
+export const deepRoutes = routesNotInSideBar.concat(dashboardRoutes);

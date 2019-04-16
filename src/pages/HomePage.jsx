@@ -4,6 +4,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from '@material-ui/core/styles';
+import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from "@material-ui/core/DialogContent";
@@ -126,7 +127,9 @@ class HomePage extends React.Component {
                       </CardHeader>
 
                       <CardBody style={{color:"grey"}}>
-                        <h4 >会议主题：{meeting.title}</h4>
+                        <Link to={"/meeting/" + meeting.meeting_id}>
+                          <h4 >会议主题：{meeting.title}</h4>
+                        </Link>
                         <middle>会议时间：{this.convertToRealtime(meeting.date, meeting.start_time, meeting.end_time)}</middle>
                         <middle style={{marginLeft:"10%"}}>会议地点：{meeting.location}</middle>
                       </CardBody>

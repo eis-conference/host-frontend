@@ -10,24 +10,15 @@ import withStyles from "@material-ui/core/styles/withStyles";
 // core components
 import Header from "components/Header/Header.jsx";
 import Footer from "components/Footer/Footer.jsx";
+import PrimarySearchAppBar from "components/AppBar/AppBar.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
 
-import dashboardRoutes from "routes/dashboard.jsx";
-
+import { dashboardRoutes, deepRoutes } from "routes/dashboard.jsx";
 import dashboardStyle from "assets/jss/material-dashboard-react/layouts/dashboardStyle.jsx";
 
 import image from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
 
-const switchRoutes = (
-  <Switch>
-    {dashboardRoutes.map((prop, key) => {
-      if (prop.redirect)
-        return <Redirect from={prop.path} to={prop.to} key={key} />;
-      return <Route path={prop.path} component={prop.component} key={key} />;
-    })}
-  </Switch>
-);
 
 class App extends React.Component {
   constructor(props) {
@@ -80,20 +71,22 @@ class App extends React.Component {
           {...rest}
         />
         <div className={classes.mainPanel} ref="mainPanel">
-          <Header
-            routes={dashboardRoutes}
-            handleDrawerToggle={this.handleDrawerToggle}
-            {...rest}
-          />
-          {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
-          {this.getRoute() ? (
-            <div className={classes.content}>
-              <div className={classes.container}>{switchRoutes}</div>
+          <PrimarySearchAppBar style={{boxShadow:"0px 0px 0px #e0e0e0"}} color="transparent"/>
+
+          <div className={classes.content}>
+            <div className={classes.container}>
+
+          <Switch >
+            {
+              deepRoutes.map((prop, key) => {
+                if (prop.redirect)
+                  return <Redirect from={prop.path} to={prop.to} key={key} />;
+                return <Route exact path={prop.path} key={key} render={ (props) => <prop.component  {...props}/> } />;
+              })
+            }
+          </Switch>
             </div>
-          ) : (
-            <div className={classes.map}>{switchRoutes}</div>
-          )}
-          {this.getRoute() ? <Footer /> : null}
+          </div>
         </div>
       </div>
     );
