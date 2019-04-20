@@ -21,6 +21,7 @@ import Button from "@material-ui/core/Button";
 import Danger from "components/Typography/Danger.jsx";
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 import { withStyles } from '@material-ui/core/styles';
+import CreateVote from "../components/Interaction/CreateVote";
 
 
 class InProgress extends  React.Component{
@@ -76,7 +77,7 @@ class InProgress extends  React.Component{
     if(interaction === 1)
     {
       console.log(interaction);
-      detailInteraction = (<h3>此处是投票</h3>)
+      detailInteraction = (<CreateVote/>)
     }
     else if (interaction ===2)
     {
