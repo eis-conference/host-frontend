@@ -22,20 +22,26 @@ import Danger from "components/Typography/Danger.jsx";
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 import { withStyles } from '@material-ui/core/styles';
 import CreateVote from "../components/Interaction/CreateVote";
-
+import HistoryVote from "../components/Interaction/HistoryVote";
 
 class InProgress extends  React.Component{
   constructor(props) {
     super(props);
     this.state = {
       title:"IST实验室年会",
-      interaction: -1 //1投票 2评分 3抽奖 4红包 -1无
+      interaction: -1 //1投票 2评分 3抽奖 4红包 5历史投票 -1无
     }
   }
 
   handleCreateVote=()=>{
     this.setState({
       interaction: 1
+    })
+  };
+
+  handleHistoryVote=()=>{
+    this.setState({
+      interaction: 5
     })
   };
 
@@ -83,6 +89,11 @@ class InProgress extends  React.Component{
     {
       detailInteraction = (<h3>此处是评分</h3>)
     }
+    else if(interaction ===5)
+    {
+      detailInteraction = (<HistoryVote/>)
+    }
+
     return(
       <div>
         <GridContainer xs={12} sm={12} md={12} >
@@ -114,7 +125,9 @@ class InProgress extends  React.Component{
                       </Button>
                     </td>
                     <td>
-                      <Button className={classes.cardTitle} style={{fontSize:"14px", color:"#757575",}}>
+                      <Button className={classes.cardTitle}
+                              style={{fontSize:"14px", color:"#757575",}}
+                              onClick={this.handleHistoryVote}>
                         <History/>&nbsp;&nbsp;查看历史
                       </Button>
                     </td>

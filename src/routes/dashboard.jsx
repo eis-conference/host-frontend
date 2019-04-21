@@ -9,6 +9,7 @@ import Notifications from "@material-ui/icons/Notifications";
 import Unarchive from "@material-ui/icons/Unarchive";
 import Schedule from "@material-ui/icons/Schedule";
 import Home from "@material-ui/icons/Home";
+import LibraryAdd from "@material-ui/icons/LibraryAdd";
 // core components/views
 import DashboardPage from "views/Dashboard/Dashboard.jsx";
 import UserProfile from "views/UserProfile/UserProfile.jsx";
@@ -21,6 +22,7 @@ import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.jsx";
 import HomePage from "pages/HomePage.jsx";
 import MeetingPage from "pages/MeetingPage.jsx";
 import InProgress from "pages/InProgress.jsx";
+import CreateMeeting from "pages/CreateMeeting.jsx";
 
 export const dashboardRoutes = [
   {
@@ -36,6 +38,13 @@ export const dashboardRoutes = [
     navbarName: "进行中",
     icon: Schedule,
     component: InProgress
+  },
+  {
+    path: "/createMeeting",
+    sidebarName: "创建会议",
+    navbarName: "创建会议",
+    icon: LibraryAdd,
+    component: CreateMeeting
   },
   {
     path: "/dashboard",
@@ -72,7 +81,6 @@ export const dashboardRoutes = [
     icon: BubbleChart,
     component: Icons
   },
-
   {
     path: "/notifications",
     sidebarName: "Notifications",
