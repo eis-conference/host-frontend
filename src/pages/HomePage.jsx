@@ -18,6 +18,8 @@ import CardBody from "components/Card/CardBody.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
 import SentimentVerySatisfied from "@material-ui/icons/SentimentVerySatisfied";
 import MeetingInfo from "views/Meeting/MeetingInfo.jsx";
+import * as QrCode from 'qrcode.react'
+
 
 
 const styles = theme => ({
@@ -41,6 +43,7 @@ class HomePage extends React.Component {
       date:"",
       hostname:"",
       attendants:[],
+      showQR: false,
       meetings: [
         {
           meeting_id:"123456789",
@@ -85,6 +88,7 @@ class HomePage extends React.Component {
 
   handleDetail=(meeting)=>{
     this.setState({
+      meeting_id: meeting.meeting_id,
       showDetail: true,
       detailMeeting: meeting,
       title: meeting.title,
@@ -102,6 +106,19 @@ class HomePage extends React.Component {
     this.setState({
       showDetail:false,
       detailMeeting:{}
+    })
+  };
+
+  handleQRClose=()=>{
+    this.setState({
+      showQR: false
+    })
+  };
+
+  handleStartMeeting=(meeting)=>{
+    this.setState({
+      showQR: true,
+      meeting_id: meeting.meeting_id
     })
   };
 
@@ -123,7 +140,7 @@ class HomePage extends React.Component {
                         <Button style={{background:"#5C6BC0", marginLeft:"3%", marginTop:"5%", color:"white"}}
                                 onClick={()=>this.handleDetail(meeting)}>查看详情</Button>
                         <Button style={{background:"#5C6BC0", marginLeft:"1%",marginTop:"5%", color:"white"}}
-                                >添加与会人员</Button>
+                                onClick={()=>this.handleStartMeeting(meeting)}>开启会议</Button>
                       </CardHeader>
 
                       <CardBody style={{color:"grey"}}>
@@ -162,6 +179,21 @@ class HomePage extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
+        <Dialog
+            open={this.state.showQR}
+            keepMounted
+            onClose={this.handleQRClose}
+            maxWidth="xs"
+            fullWidth={true}
+        >
+          <DialogTitle style={{fontSize:"40px", marginLeft:"30%"}}>
+            {"扫码签到"}
+          </DialogTitle>
+          <DialogContent>
+            <QrCode value={this.state.meeting_id} size={200} style={{marginLeft:"20%"}}/>
+          </DialogContent>
+        </Dialog>
+
       </div>
     )
   }

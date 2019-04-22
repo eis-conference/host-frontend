@@ -49,25 +49,65 @@ class CreateMeeting extends  React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      users:[{username:"Jack"},{username:"Alice"},{username:"Lily"}],
+      users:[{
+        username:"Jack",
+        attend:false,
+      },{
+        username:"Rose",
+        attend:false,
+      },{
+        username:"Alice",
+        attend:false,
+      }],
       attendants:[]
-    }
+    };
+
+    fetch('http://207.148.107.114:8080/users/getAllUsers',
+    {
+      method: 'GET',
+      mode: 'cors',
+
+    })
+        .then(response => {
+          console.log('Request successful', response);
+          return response.json()
+              .then(result => {
+                console.log("result:", result.User.length);
+              })
+        })
 
   }
 
+
   handleChangeAttendants=(username)=>{
     let index = this.state.attendants.indexOf(username);
-    console.log(username,":",index);
-    if(index === -1)
+    let user_index = 0;
+    for(let i=0; i<this.state.users.length; i++)
+    {
+      if(this.state.users[i].username === username)
+      {
+        user_index = i;
+        break;
+      }
+    }
+   // console.log(username,":",index);
+    if(index === -1) {
       this.state.attendants.push(username);
-    else
+      this.state.users[user_index].attend = !this.state.users[user_index].attend;
+      console.log("1:", this.state.users[user_index].attend);
+    }
+    else {
       this.state.attendants.splice(index, 1);
-
+      this.state.users[user_index].attend = !this.state.users[user_index].attend;
+      console.log("2:", this.state.users[user_index].attend);
+    }
     console.log(this.state.attendants);
+    this.forceUpdate();
   };
 
   render(){
     const{classes} = this.props;
+
     return (
         <div>
           <GridContainer>
@@ -195,7 +235,7 @@ class CreateMeeting extends  React.Component {
                     <FormControlLabel
                         control={
                           <Checkbox
-                              checked={this.state.attendants.indexOf(user.username) !== -1}
+                              checked={user.attend}
                               onChange={()=>this.handleChangeAttendants(user.username)}
                           />
                         }

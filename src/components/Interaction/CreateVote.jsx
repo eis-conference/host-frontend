@@ -24,6 +24,8 @@ const styles = theme => ({
 });
 
 const selections=[];
+let websocket = null;
+
 
 class CreateVote extends React.Component {
   constructor(props) {
@@ -31,7 +33,6 @@ class CreateVote extends React.Component {
     this.state = {
       description: "",
       wordCount: 80,
-      type:"single",
       maxSelection: 1,
       period: 10,
       selectionCount:2,
@@ -46,11 +47,6 @@ class CreateVote extends React.Component {
     })
   };
 
-  handleChangeType=(e)=>{
-    this.setState({
-      type: e.target.value
-    })
-  };
 
   handleChangeMaxSelection=(e)=>{
     this.setState({
@@ -81,7 +77,7 @@ class CreateVote extends React.Component {
   };
 
   handleFillSelection=(e, key)=>{
-    console.log(e.target.value);
+    //console.log(e.target.value);
     //console.log("key:",key);
     let old_length = selections.length;
     if(key > old_length)
@@ -96,14 +92,36 @@ class CreateVote extends React.Component {
     this.setState({
       hideName: !this.state.hideName
     })
-  }
+  };
 
   createVote=()=>{
+    console.log(this.state.description);
+    console.log(this.state.maxSelection);
+    console.log(selections);
+    if("WebSocket" in window){
+      websocket = new WebSocket("ws://localhost:8080/vote/host");
+    }else{
+      alert("Not support websocket");
+      return false;
+    }
+    websocket.onopen = function(event){
+      console.log("建立连接成功！");
+    };
+
+    websocket.onmessage = function(event){
+      console.log(event);
+    }
+
+    let socketMsg = {type:0, description:this.state.description,
+                      maxSelection: this.state.maxSelection, selections: selections};
+    if(websocket) {
+      websocket.send(JSON.stringify(socketMsg));
+    }
 
   };
 
   showSelections=(key)=>{
-    console.log("key:",key);
+    //console.log("key:",key);
     let label = "选项"+key;
       return (
         <GridItem xs={12} sm={12} md={7}>
